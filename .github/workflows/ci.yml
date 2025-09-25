@@ -1,0 +1,20 @@
+name: Foundry CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Foundry
+        run: curl -L https://foundry.paradigm.xyz | bash && foundryup
+
+      - name: Add Foundry to PATH
+        run: echo "$HOME/.foundry/bin" >> $GITHUB_PATH
+
+      - name: Run tests
+        run: forge test -vvv
